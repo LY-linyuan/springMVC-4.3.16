@@ -51,9 +51,26 @@ public class MyController {
 
         // 指定视图 指定视图的完整路径
         // 框架对试图的使用  执行的是forward 转发操作request.getRequestDispather("/show.jsp").forward(...)
-        mv.setViewName("/show.jsp");
+        // mv.setViewName("/show.jsp");
+        // mv.setViewName("/WEB-INF/view/show.jsp");
+
+        // mv.setViewName("/WEB-INF/view/other.jsp");
+
+        // 当配置了属兔解析器后, 可以使用逻辑名称(文件名) 来指定视图
+        // 框架会使用视图解析器的前缀加上  逻辑名称  加上后缀  组成完整的路径 就是字符串连接操作
+        mv.setViewName("show");
 
         // 返回mv
+        return mv;
+    }
+
+    @RequestMapping(value = {"/some.do", "/second.do"})
+    public ModelAndView doOther() {  // doget() service请求
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("msg", "欢迎使用springmvc做web开发");
+        mv.addObject("fun", "执行dosome方法");
+        mv.setViewName("other");
+
         return mv;
     }
 }

@@ -6,6 +6,7 @@
 <body>
     <p>打一个springmvc项目</p>
     <p><a href="some.do">发起一个some.do的请求</a></p>
+    <p><a href="other.do">发起一个other.do的请求</a></p>
 
 </body>
 </html>
