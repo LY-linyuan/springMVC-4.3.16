@@ -4,8 +4,8 @@
     <title>Title</title>
 </head>
 <body>
-    <p>打一个springmvc项目</p>
-    <p><a href="some.do">发起一个some.do的请求</a></p>
-
+    <h1>show.jsp  从request作用域中获取数据</h1>  <br>
+    <h3>mas 数据 : ${msg}</h3>
+    <h3>fun 数据 : ${fun}</h3>
 </body>
 </html>
