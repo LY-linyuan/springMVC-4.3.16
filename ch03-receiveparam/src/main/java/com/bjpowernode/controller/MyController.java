@@ -1,10 +1,12 @@
 package com.bjpowernode.controller;
 
+import com.bjpowernode.vo.Student;
 import com.sun.deploy.net.HttpResponse;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +41,43 @@ public class MyController {
         ModelAndView mv = new ModelAndView();
         mv.addObject("name", name);
         mv.addObject("age", age);
+        // other 是视图文件的逻辑名称(文件名称)
+        mv.setViewName("other");
+
+        return mv;
+    }
+
+    /**
+     *  请求中的参数名和方法的形参名不一样
+     * @RequestParam: 在逐个接收请求参数中 解决请求中的参数名和形参名不一样
+     *      属性 : 1. value 请求中的参数名称
+     *             2. request 是一个boolean类型的 默认是true
+     *                  true : 表示请求中必须包含此参数
+     *      位置 : 在处理器方法的形参定义前面
+     */
+    @RequestMapping(value = {"/receiveparam1.do"})
+    public ModelAndView doSecond(@RequestParam(value = "rname", required = false) String name,
+                                 @RequestParam(value = "rage", required = false) Integer age)
+            throws UnsupportedEncodingException {
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("name", name);
+        mv.addObject("age", age);
+        // other 是视图文件的逻辑名称(文件名称)
+        mv.setViewName("other");
+
+        return mv;
+    }
+
+    /**
+     *  处理器方法的形参是java对象  这个对象的属性名和请求中的参数名是一样的
+     *  框架会创建轻餐的对象给属性赋值
+     */
+    @RequestMapping(value = {"/receiveObject.do"})
+    public ModelAndView receiveObject(Student mystudent) throws UnsupportedEncodingException {
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("name", mystudent.getName());
+        mv.addObject("age", mystudent.getAge());
+        mv.addObject("mystudent", mystudent);
         // other 是视图文件的逻辑名称(文件名称)
         mv.setViewName("other");
 
