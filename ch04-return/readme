@@ -1,0 +1,38 @@
+ch04-return:  处理器方法的返回值  表示请求处理的结果
+
+   1. ModelAndView : 有数据和视图, 大视图执行 forward
+   2. String : 表示视图 可以是逻辑名称, 也可以是完整视图路径
+   3. void : 不能表示数据, 也能不能表示视图。 在处理ajax可以使用void处理请求
+            通过HttpServletResponse输出数据, 响应ajax骑牛
+            ajax返回的就是数据 和视图无关
+   4. Object : 例如String , Integer， Map, List, Student 等等都是对象
+            对象有属性 属性就是数据 所以返回Object表示数据 和视图无关
+            可以使用对象表示数据响应ajax请求
+
+            现在做ajax 主要使用json的格式 实现步骤:
+                1. 及收入处理json的工具的依赖 springmvc默认使用的jackson
+                2. 在springmvc的配置文件中 加入<mvc:annotation-driven> 注解驱动
+                    完成json = om.writeValueAsString(student);功能
+                3. 在处理器方法上面加入@Response.getWriter();
+                    response.setContentType("application/json;charset=utf-8");
+                    PrintWriter writer = response.getWriter();
+                    writer.print(json);
+                    writer.flush();
+                    writer.close();
+                    // 完成这个注解
+
+   原理 : springmvc处理方法返回Object 可以转为json输出到浏览器 响应ajax内部原理
+   1. <mvc:annotation-driven> 注解驱动
+        注解驱动实现的功能是完成java对象到json xml 文本 二进制 的转换
+        HttpMessageConverter接口 消息转换器
+            功能 定义了java对象转化为 json xml 文本 二进制 等数据转换的方法 有很多的实现类
+                这些实现类完成了java到json 等等的转换
+                控制器类吧结果输出到浏览器时的方法
+                 boolean canWrite(Class<?> var1, @Nullable MediaType var2);
+                 void write(T var1, @Nullable MediaType var2, HttpOutputMessage var3) throws IOException, HttpMessageNotWritableException;
+                1. canWrite 能不能转换为var2的数据格式
+                        检查你给的对象  能不能转化为你给定的数据格式
+                     可以转换返回true
+                2. write 处理器调用 jackson 中的ObjectMapper转化为json字符串
+                    json = om.writeValueAsString(student);
+
