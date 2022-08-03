@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+    <!--声明组件扫描器-->
+    <context:component-scan base-package="com.bjpowernode.controller"></context:component-scan>
+
+    <!--声明 springmvc 框架中的试图解析器  帮助开发人员设置试图文件的路线-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--前缀  是视图文件的路径-->
+        <property name="prefix" value="/WEB-INF/view/"></property>
+        <!--后缀  表示视图文件的扩展名-->
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <!--声明拦截器 : 拦截器可以有 0 或者多个 -->
+    <mvc:interceptors>
+        <!--声明第一个拦截器-->
+        <mvc:interceptor>
+            <!--用来指定拦截的uri地址
+                    path : 就是uri 可以使用通配符
+                    ** : 任意字符 可以表示文件和多级目录
+            -->
+            <mvc:mapping path="/user/**"/>
+            <!--声明拦截器对象-->
+            <bean class="com.bjpowernode.handle.MyInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>

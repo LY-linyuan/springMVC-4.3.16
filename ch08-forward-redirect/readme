@@ -1,0 +1,6 @@
+ch08-forward-redirect 转发和重定向操作
+
+forward : 转发
+redirect : 重定向
+
+forward 和 redirect都是关键字, 有一个共同的特点  不和视图解析器一起工作
